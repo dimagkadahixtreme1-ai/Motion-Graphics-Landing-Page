@@ -3,15 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Heera Store | High-End Motion</title>
+    <title>Heera Store | Premium Wholesale Motion</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Montserrat:wght@300;500&family=Playfair+Display:ital,wght@1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     
     <style>
         :root {
             --gold: #D4AF37;
             --black: #0a0a0a;
             --white: #ffffff;
+            --dark-grey: #1a1a1a;
             --font-main: 'Syne', sans-serif;
         }
 
@@ -21,145 +23,226 @@
             color: var(--white); 
             font-family: 'Montserrat', sans-serif;
             overflow-x: hidden;
+            line-height: 1.6;
         }
 
-        /* Custom Cursor for 'Tagda' feel */
+        /* --- Custom Premium Cursor --- */
         #cursor {
-            width: 20px; height: 20px; background: var(--gold);
+            width: 15px; height: 15px; background: var(--gold);
             border-radius: 50%; position: fixed; pointer-events: none;
-            z-index: 999; mix-blend-mode: difference; transition: transform 0.1s;
+            z-index: 9999; mix-blend-mode: difference; transition: transform 0.15s ease;
         }
 
-        /* --- HERO SECTION: Reel Style Typography --- */
+        /* --- Hero Section --- */
         .hero {
             height: 100vh; display: flex; flex-direction: column;
             justify-content: center; align-items: center; text-align: center;
-            perspective: 1000px;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
+                        url('https://images.unsplash.com/photo-1558769132-cb1aea458c5e?q=80&w=2000') center/cover no-repeat;
+            position: relative;
         }
 
         .hero h1 {
             font-family: var(--font-main);
-            font-size: clamp(3rem, 15vw, 10rem);
+            font-size: clamp(3rem, 15vw, 9rem);
             line-height: 0.8; text-transform: uppercase;
-            letter-spacing: -5px;
+            letter-spacing: -5px; margin-bottom: 20px;
         }
 
-        .hero h1 span { display: block; }
-        .hero .small-text { 
-            font-size: 1rem; letter-spacing: 10px; margin-top: 20px; 
-            color: var(--gold); text-transform: uppercase;
+        .hero .reveal { display: block; overflow: hidden; }
+
+        .slogan-box { margin-top: 30px; }
+        .slogan-hindi {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            color: var(--gold); font-weight: 500;
         }
 
-        /* Typography Mix (Uchhi-Nichi Sizes) */
+        /* --- Kinetic Typography Section --- */
         .kinetic-text {
-            padding: 100px 5%;
-            font-family: var(--font-main);
-            text-transform: uppercase;
+            padding: 150px 10%; text-align: center;
+            font-family: var(--font-main); text-transform: uppercase;
         }
-
         .kinetic-text p {
-            font-size: clamp(2rem, 5vw, 5rem);
-            line-height: 1.1; margin-bottom: 50px;
+            font-size: clamp(2rem, 6vw, 5rem); line-height: 1;
+        }
+        .highlight { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.4em; color: var(--gold); vertical-align: middle; }
+        .small-caps { font-size: 0.4em; letter-spacing: 5px; display: block; opacity: 0.7; }
+
+        /* --- Stats Bar --- */
+        .stats-bar {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            background: var(--dark-grey); padding: 80px 10%; text-align: center;
+        }
+        .stat-item h2 {
+            color: var(--gold); font-size: 4rem; font-family: var(--font-main);
         }
 
-        .highlight { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3em; color: var(--gold); }
-        .thin { font-weight: 300; font-family: 'Montserrat'; font-size: 0.5em; vertical-align: middle; }
-
-        /* --- SCROLL REVEAL CARDS --- */
-        .reveal-section { padding: 100px 5%; }
-        .image-container {
-            position: relative; width: 100%; height: 80vh;
-            margin: 100px 0; overflow: hidden; border-radius: 20px;
+        /* --- Reveal Gallery --- */
+        .gallery { padding: 100px 5%; background: var(--black); }
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 40px; }
+        
+        .card { 
+            position: relative; border-radius: 15px; overflow: hidden; 
+            height: 600px; transition: 0.5s;
         }
-        .image-container img {
-            width: 100%; height: 120%; object-fit: cover;
-            transform: scale(1.2);
+        .card img { width: 100%; height: 110%; object-fit: cover; transition: 0.8s; }
+        .card:hover img { transform: scale(1.1); }
+        
+        .card-overlay {
+            position: absolute; bottom: 0; left: 0; width: 100%;
+            padding: 40px; background: linear-gradient(transparent, rgba(0,0,0,0.9));
         }
-        .img-caption {
-            position: absolute; bottom: 40px; left: 40px;
-            font-size: 4rem; font-family: var(--font-main);
+        .card-overlay h3 { font-family: var(--font-main); font-size: 2rem; color: var(--gold); }
+
+        /* --- Premium Form --- */
+        .contact { padding: 100px 10%; max-width: 1000px; margin: 0 auto; }
+        .contact h2 { font-size: 4rem; font-family: var(--font-main); text-align: center; margin-bottom: 50px; }
+        
+        form { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+        input, textarea { 
+            background: transparent; border: none; border-bottom: 2px solid #333;
+            padding: 20px; color: white; font-size: 1.1rem; outline: none; transition: 0.3s;
+        }
+        input:focus, textarea:focus { border-color: var(--gold); background: rgba(212, 175, 55, 0.05); }
+        .full-width { grid-column: span 2; }
+        
+        button { 
+            grid-column: span 2; background: var(--gold); color: black; 
+            padding: 25px; border: none; font-weight: 800; text-transform: uppercase;
+            letter-spacing: 2px; cursor: pointer; transition: 0.4s;
+        }
+        button:hover { background: white; transform: translateY(-5px); }
+
+        footer { 
+            padding: 80px 5%; text-align: center; border-top: 1px solid #222;
+            font-size: 0.8rem; letter-spacing: 2px; opacity: 0.5;
         }
 
-        /* --- FOOTER --- */
-        footer { padding: 100px 5%; border-top: 1px solid #333; text-align: center; }
-        .footer-logo { font-size: 8vw; font-family: var(--font-main); opacity: 0.1; }
-
+        @media (max-width: 768px) {
+            form { grid-template-columns: 1fr; }
+            .full-width, button { grid-column: span 1; }
+            .hero h1 { font-size: 4rem; }
+        }
     </style>
 </head>
 <body>
 
     <div id="cursor"></div>
 
-    <section class="hero">
-        <div class="small-text">Bhopal's Legacy</div>
-        <h1>
+    <header class="hero">
+        <h1 data-aos="zoom-out" data-aos-duration="1500">
             <span class="reveal">HEERA</span>
             <span class="reveal" style="color: var(--gold);">STORE</span>
         </h1>
-        <div class="small-text">EST. 1989</div>
+        <div class="slogan-box" data-aos="fade-up" data-aos-delay="600">
+            <p class="slogan-hindi">समय बीतता गया <br> <span style="font-size: 1.2em; font-style: italic;">AUR</span> <br> विश्वास बढ़ता गया</p>
+        </div>
+        <div class="small-caps" style="margin-top: 20px;">The House Of Readymade | Bhopal</div>
+    </header>
+
+    <section class="stats-bar">
+        <div class="stat-item" data-aos="fade-up">
+            <h2 class="counter" data-target="37">0</h2>
+            <p class="small-caps">Years of Legacy</p>
+        </div>
+        <div class="stat-item" data-aos="fade-up" data-aos-delay="200">
+            <h2 class="counter" data-target="11000">0</h2>
+            <p class="small-caps">Happy Retailers</p>
+        </div>
+        <div class="stat-item" data-aos="fade-up" data-aos-delay="400">
+            <h2 class="counter" data-target="480">0</h2>
+            <p class="small-caps">Cities Covered</p>
+        </div>
     </section>
 
     <section class="kinetic-text">
-        <p data-scroll data-scroll-speed="1">
-            समय बीतता <span class="highlight">Gaya</span><br>
-            <span class="thin">lekin</span> <br>
-            VISHWAS <span style="font-size: 1.5em;">Bhadta</span> GAYA
+        <p data-aos="fade-right">
+            <span class="small-caps">Premium Quality</span>
+            WHOSESALE <span class="highlight">Ethnic</span> <br> 
+            & <span style="font-size: 1.6em;">Western</span> WEAR
         </p>
     </section>
 
-    <section class="reveal-section">
-        <div class="image-container">
-            <img src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?q=80&w=2000" alt="Fashion" class="parallax-img">
-            <div class="img-caption">ETHNIC.</div>
-        </div>
-
-        <div class="image-container">
-            <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=2000" alt="Fashion" class="parallax-img">
-            <div class="img-caption" style="color: var(--gold);">MODERN.</div>
+    <section class="gallery">
+        <div class="gallery-grid">
+            <div class="card" data-aos="fade-up">
+                <img src="https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?q=80&w=800" alt="Ethnic">
+                <div class="card-overlay">
+                    <h3>Ethnic Hub</h3>
+                    <p>Traditional elegance redefined.</p>
+                </div>
+            </div>
+            <div class="card" data-aos="fade-up" data-aos-delay="200">
+                <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=800" alt="Western">
+                <div class="card-overlay">
+                    <h3>Modern Silhouettes</h3>
+                    <p>The contemporary edge.</p>
+                </div>
+            </div>
         </div>
     </section>
 
+    <section class="contact" data-aos="fade-up">
+        <h2>GET IN TOUCH</h2>
+        <form action="https://formspree.io/f/mlgopkwk" method="POST">
+            <input type="text" name="business_name" placeholder="BUSINESS NAME" required>
+            <input type="text" name="whatsapp" placeholder="WHATSAPP NUMBER" required>
+            <textarea name="message" class="full-width" rows="4" placeholder="YOUR REQUIREMENTS..."></textarea>
+            <button type="submit">REQUEST CATALOG</button>
+        </form>
+    </section>
+
     <footer>
-        <div class="footer-logo">HEERA STORE</div>
-        <p>Premium Wholesale Fashion Experience</p>
+        <p>&copy; 2026 HEERA STORE | BHOPAL, INDIA | DESIGNED FOR LUXURY</p>
     </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
 
     <script>
-        // Custom Cursor movement
+        // AOS
+        AOS.init({ duration: 1000, once: false });
+
+        // Premium Cursor
         const cursor = document.getElementById('cursor');
         document.addEventListener('mousemove', (e) => {
             gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.1 });
         });
 
-        // Hero Text Reveal
-        gsap.from(".reveal", {
-            y: 200, skewY: 10, duration: 1.5, stagger: 0.3, ease: "power4.out"
+        document.querySelectorAll('button, .card, input').forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.style.transform = 'scale(4)');
+            el.addEventListener('mouseleave', () => cursor.style.transform = 'scale(1)');
         });
 
-        // Parallax Effect for Images
-        gsap.utils.toArray('.parallax-img').forEach(img => {
-            gsap.to(img, {
-                yPercent: -20,
-                ease: "none",
-                scrollTrigger: {
-                    trigger: img,
-                    scrub: true
+        // Counter Logic
+        const counters = document.querySelectorAll('.counter');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const target = +entry.target.getAttribute('data-target');
+                    gsap.to(entry.target, {
+                        innerText: target,
+                        duration: 2,
+                        snap: { innerText: 1 },
+                        onUpdate: function() {
+                            entry.target.innerText = Math.ceil(this.targets()[0].innerText) + "+";
+                        }
+                    });
                 }
             });
-        });
+        }, { threshold: 1 });
+        counters.forEach(c => observer.observe(c));
 
-        // Kinetic Typography Scroll Reveal
-        gsap.from(".kinetic-text p", {
-            opacity: 0, x: -100, duration: 1,
+        // GSAP Scroll Animations
+        gsap.to(".hero h1", {
             scrollTrigger: {
-                trigger: ".kinetic-text",
-                start: "top 80%",
-                end: "top 20%",
-                scrub: 1
-            }
+                trigger: ".hero",
+                start: "top top",
+                scrub: true
+            },
+            y: 200,
+            opacity: 0
         });
     </script>
 </body>
